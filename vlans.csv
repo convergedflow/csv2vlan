@@ -1,0 +1,17 @@
+vlan_id,vlan_name,scope,voice
+128,cust-site-vlan128-corp-G,G,false
+129,cust-site-vlan129-corp-1,1,false
+130,cust-site-vlan130-corp-2,2,false
+131,cust-site-vlan131-corp-3,3,false
+132,cust-site-vlan132-phone-G,G,true
+133,cust-site-vlan133-phone-1,1,true
+134,cust-site-vlan134-phone-2,2,true
+135,cust-site-vlan135-phone-3,3,true
+136,cust-site-vlan136-print-G,G,false
+137,cust-site-vlan137-print-1,1,false
+138,cust-site-vlan138-print-2,2,false
+139,cust-site-vlan139-print-3,3,false
+140,cust-site-vlan144-iot-G,G,false
+141,cust-site-vlan145-iot-1,1,false
+142,cust-site-vlan146-iot-2,2,false
+143,cust-site-vlan147-iot-3,3,false

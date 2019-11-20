@@ -1,0 +1,5 @@
+{% set vlans_floor = [] %}
+{% for vlan in vlans.list if vlan.scope ==  item -%}
+{{ vlans_floor.append( vlan.vlan_id ) }}
+{%- endfor %}
+{{ vlans_floor|join(',') }}

@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - file: path=tmp state=absent
+  - file: path=tmp state=directory
+  - file: path=config state=absent
+  - file: path=config state=directory
+  - file: path=vars state=absent
+  - file: path=vars state=directory
+  #
+  - name: Read vlans from CSV file and register a list of dictionaries
+    read_csv:
+      path: vlans.csv
+    register: vlans
+  #
+  - name: Generate a list of floors
+    vars:
+      floors_tmp: []
+    set_fact:
+      floors_tmp: "{{ floors_tmp }} + ['{{ item.scope }}']"
+      floors: "{{ floors_tmp | unique }}"
+    loop: "{{ vlans.list }}"
+  #
+  - name: Generate vlan configurations
+    template: src=vlan_cfg.j2 dest=tmp/{{item.vlan_name}}.tmp
+    loop: "{{ vlans.list }}"
+  #
+  - name: Generate per-floor vlan lists
+    template: src=vlan_list.j2 dest=vars/vlan_list_floor_{{item}}.tmp
+    loop: "{{ floors }}"
+  #
+  - name: Assemble per-floor vlan configurations
+    assemble:
+      src: tmp
+      dest: config/vlan_cfg_floor_{{scope}}.conf
+      regexp: -{{scope}}.tmp$
+    loop: "{{ floors }}"
+    vars:
+      scope: "{{ item }}"

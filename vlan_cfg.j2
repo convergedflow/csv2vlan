@@ -1,0 +1,5 @@
+vlan {{item.vlan_id}}
+   name "{{item.vlan_name}}"
+   {% if item.voice == 'true' %}voice
+   {% endif %}
+   exit
